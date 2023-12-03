@@ -32,6 +32,12 @@ public class Scooter implements IVehicle{
     }
 
     @Override
+    public int seeDistance() {
+        System.out.println(this.distance);
+        return this.distance;
+    }
+
+    @Override
     public boolean isBusy() {
         return this.isBusy;
     }

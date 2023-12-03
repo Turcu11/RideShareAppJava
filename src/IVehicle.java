@@ -4,6 +4,8 @@ public interface IVehicle {
 
     int getId();
 
+    int seeDistance();
+
     boolean isBusy();
     String getLicensePlate();
 

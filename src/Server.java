@@ -47,8 +47,10 @@ public class Server implements IServer{
         option = scanner.nextInt();
         if(option == 1){
             System.out.println("great just waiting for the driver to confirm :D");
-            IVehicle chosenVehicle = viableOptions.get(viableOptions.size()-1);
-            notifyDriver(chosenVehicle);
+            if(viableOptions.size() > 0){
+                IVehicle chosenVehicle = viableOptions.get(0);
+                notifyDriver(chosenVehicle);
+            }
         } else if (option == 2) {
             System.out.println("too bad :(");
 
@@ -74,13 +76,17 @@ public class Server implements IServer{
     }
 
     private ArrayList getNearestVehicle(IUser user){
-        int tempDistance = 9999;
-        for(Map.Entry<Integer, IVehicle> set : vehicles.entrySet()){
-            if(!set.getValue().isBusy()){
-                if(tempDistance > set.getValue().getDistance(user)){
-                    tempDistance = set.getValue().getDistance(user);
-                    if(viableOptions.size() < 4) //this is made like this so I store only the fist 3 nearest vehicles
-                        viableOptions.add(set.getValue());
+        viableOptions.clear();
+        int tempDistance = Integer.MAX_VALUE;
+        for(Map.Entry<Integer, IVehicle> entry : vehicles.entrySet()){
+            IVehicle vehicle = entry.getValue();
+            if(!vehicle.isBusy()){
+                int distance = vehicle.getDistance(user);
+                if(tempDistance > distance){
+                    tempDistance = distance;
+                }
+                if(viableOptions.size() < 3){
+                    viableOptions.add(vehicle);
                 }
             }
 //            System.out.println(tempDistance);
@@ -89,12 +95,14 @@ public class Server implements IServer{
     }
 
     private void showTheUserViableOptions(IUser user){
-        System.out.println("You gave the following options: ");
+        System.out.println("You have the following options: ");
         for (IVehicle vehicle: viableOptions) {
             System.out.print(vehicle.getLicensePlate() + " beeing ");
             System.out.print(vehicle.getDistance(user) + " km away");
             System.out.println();
         }
-        System.out.println("And the nearest vehicle is just " + viableOptions.get(viableOptions.size() - 1).getDistance(user) + " km away");
+        if(viableOptions.size() > 0){
+            System.out.println("And the nearest vehicle is just " + viableOptions.get(0).getDistance(user) + " km away");
+        }
     }
 }

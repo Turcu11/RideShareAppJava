@@ -2,7 +2,7 @@ public class Main {
     public static void main(String[] args) {
 
         Server server = new Server();
-        User user = new User(1, 1, server);
+        User user = new User(1, 10, server);
         User user2 = new User(2, 13, server);
         Car VW = new Car(1, 10, "AR95TDA");
         Car Audi = new Car(2, 12, "AR07AUD");
@@ -19,5 +19,6 @@ public class Main {
         server.registerVehicle(Mercedes);
 
         user.requestRide();
+        user2.requestRide();
     }
 }

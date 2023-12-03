@@ -25,6 +25,11 @@ public class Car implements IVehicle{
         return Math.abs(this.location - user.getLocation());
     }
 
+    public int seeDistance(){
+        System.out.println(this.distance);
+        return this.distance;
+    }
+
     @Override
     public int getId() {
         return this.id;
